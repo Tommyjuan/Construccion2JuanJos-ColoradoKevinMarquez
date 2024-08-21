@@ -13,7 +13,7 @@ public abstract class Helper {
     public static PersonDto parse(Person person) {
         PersonDto personDto = new PersonDto();
         personDto.setId(person.getId());
-        personDto.setCedula(person.getCedula());
+        personDto.setDocument(person.getCedula());
         personDto.setName(person.getName());
         personDto.setCelPhone(person.getCelPhone());
         return personDto;
@@ -23,7 +23,7 @@ public abstract class Helper {
     public static Person parse(PersonDto personDto) {
         Person person = new Person();
         person.setId(personDto.getId());
-        person.setCedula(personDto.getCedula());
+        person.setCedula(personDto.getDocument());
         person.setName(personDto.getName());
         person.setCelPhone(personDto.getCelPhone());
         return person;
