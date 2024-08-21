@@ -30,7 +30,7 @@ public class AdminController implements ControllerInterface {
         personValidator.validateName(name);
 
         System.out.println("Ingrese la cédula");
-        long cedula = personValidator.validateCedula(Utils.getReader().nextLine());
+        long cedula = personValidator.validateDocument(Utils.getReader().nextLine());
 
         System.out.println("Ingrese el número de celular");
         long celPhone = personValidator.validateCelPhone(Utils.getReader().nextLine());
@@ -45,7 +45,7 @@ public class AdminController implements ControllerInterface {
 
         PersonDto personDto = new PersonDto();
         personDto.setName(name);
-        personDto.setCedula(cedula);
+        personDto.setDocument(cedula);
         personDto.setCelPhone(celPhone);
 
         UserDto userDto = new UserDto();

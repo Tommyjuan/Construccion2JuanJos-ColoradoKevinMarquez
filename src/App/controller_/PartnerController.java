@@ -13,7 +13,7 @@ import app.dto.UserDto;
 
 /**
  *
- * @author USUARIO
+ * @author USUARIO yo
  */
 public class PartnerController implements ControllerInterface {
 
@@ -76,11 +76,11 @@ public class PartnerController implements ControllerInterface {
     public void createGuest() throws Exception {//preguntar a camilo
         System.out.println("Ingrese el nombre del invitado");
         String name = Utils.getReader().nextLine();
-        personValidator.validName(name);
+        personValidator.validateName(name);
         System.out.println("Ingrese la cédula");
-        long cedula = personValidator.validDocument(Utils.getReader().nextLine());
+        long document = personValidator.validateDocument(Utils.getReader().nextLine());
         System.out.println("ingrese el número de celular");
-        long celPhone = personValidator.validAge(Utils.getReader().nextLine());
+        long celPhone = personValidator.validateCelPhone(Utils.getReader().nextLine());
         System.out.println("ingrese el usuario del invitado");
         String userName = Utils.getReader().nextLine();
         userValidator.validUserName(userName);
@@ -90,7 +90,7 @@ public class PartnerController implements ControllerInterface {
 
         PersonDto personDto = new PersonDto();
         personDto.setName(name);
-        personDto.setCedula(cedula);
+        personDto.setDocument(document);
         personDto.setCelPhone(celPhone);
 
         UserDto userDto = new UserDto();
