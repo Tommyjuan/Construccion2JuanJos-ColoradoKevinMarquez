@@ -3,6 +3,10 @@ package App.controller.validator;
 
 public class PersonValidator extends CommonsValidator {
 
+    public static long validAge(String nextLine) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
         public PersonValidator() {
             super();  
         }

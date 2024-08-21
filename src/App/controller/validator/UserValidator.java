@@ -19,6 +19,6 @@ public class UserValidator extends CommonsValidator{
 		super.isValidString("el rol de usuario ", role);
 	}
     
-    
+    //mj
     
 }

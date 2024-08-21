@@ -8,7 +8,7 @@ import java.security.Timestamp;
 
 /**
  *
- * @author Camilo
+ * @author yean papi
  */
 public class Partner {
 

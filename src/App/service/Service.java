@@ -9,5 +9,7 @@ package App.service;
  * @author USUARIO
  */
 public class Service {
+
+    //aqui hay que agregar parte de codigo y tener un dao listo.
     
 }

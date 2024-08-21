@@ -6,7 +6,7 @@ package app.model;
 
 /**
  *
- * @author Camilo
+ * @author yean papi
  */
 public class Guest {
     
