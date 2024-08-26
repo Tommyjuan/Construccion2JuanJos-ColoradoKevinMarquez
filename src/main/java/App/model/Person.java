@@ -7,7 +7,7 @@ package app.model;
 public class Person {
 
     private long id;
-    private long cedula;
+    private long document;
     private String name;
     private long celPhone;
 
@@ -22,12 +22,12 @@ public class Person {
         this.id = id;
     }
 
-    public long getCedula() {
-        return cedula;
+    public long getDocument() {
+        return document;
     }
 
-    public void setCedula(long cedula) {
-        this.cedula = cedula;
+    public void setDocument(long document) {
+        this.document = document;
     }
 
     public String getName() {

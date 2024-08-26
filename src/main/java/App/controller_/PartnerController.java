@@ -4,26 +4,22 @@
  */
 package App.controller_;
 
-import App.controller.validator.GuestValidator;
+import App.controller.validator.PartnerValidator;
 import App.controller.validator.PersonValidator;
 import App.controller.validator.UserValidator;
-import App.service.Service;
+import app.service.Service;
 import app.dto.PersonDto;
 import app.dto.UserDto;
 
-/**
- *
- * @author USUARIO yo
- */
 public class PartnerController implements ControllerInterface {
 
-    private GuestValidator guestValidator;
-    private static final String MENU = "ingrese la opcion que desea ejecutar: \n 1.crear invitado. \n 2.agregar fondos \n 3. ver historial de facturas \n4cerrar sesion";
+    private PartnerValidator partnerValidator;
+    private static final String MENU = "ingrese la opcion que desea ejecutar: \n 1. para crear invitado. \n 2. para agregar fondos. \n 3.para gastar en x cosa . \n 4. para ver historial de facturas";
     private PersonValidator personValidator;
     private UserValidator userValidator;
 
     public PartnerController() {
-        this.guestValidator = new GuestValidator();
+        this.partnerValidator = new PartnerValidator();
         this.personValidator = new PersonValidator();
         this.userValidator = new UserValidator();
     }
@@ -40,8 +36,7 @@ public class PartnerController implements ControllerInterface {
         try {
             System.out.println("bienvenido " + Service.user.getUserName());
             System.out.print(MENU);
-            // Aquí podrías agregar el código para manejar la entrada del usuario y la lógica del menú.
-            return true; // Devuelve true para mantener la sesión activa, false para terminarla.
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -55,7 +50,7 @@ public class PartnerController implements ControllerInterface {
                 return true;
             }
             case "2": {
-                //this.(x); nose  como ponerlo, preguntar en clase
+                this.newFounds();
                 return true;
             }
             case "3": {
@@ -83,10 +78,10 @@ public class PartnerController implements ControllerInterface {
         long celPhone = personValidator.validateCelPhone(Utils.getReader().nextLine());
         System.out.println("ingrese el usuario del invitado");
         String userName = Utils.getReader().nextLine();
-        userValidator.validUserName(userName);
+        userValidator.validateUserName(userName);
         System.out.println("ingrese la contraseña del invitado");
         String password = Utils.getReader().nextLine();
-        userValidator.validUserName(password);
+        userValidator.validateUserName(password);
 
         PersonDto personDto = new PersonDto();
         personDto.setName(name);
@@ -100,4 +95,9 @@ public class PartnerController implements ControllerInterface {
         userDto.setRol("Guest");
     }
 
+    private void newFounds() throws Exception {
+        System.out.println("Cuanto quiere ingresar?");
+        String money = Utils.getReader().nextLine();
+        partnerValidator.validateMoney(money);
+    }
 }

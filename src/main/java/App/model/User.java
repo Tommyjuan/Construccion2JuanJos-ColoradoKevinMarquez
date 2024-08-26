@@ -6,28 +6,38 @@ package app.model;
 
 public class User {
 
-    private long Id;
-    private String person;
+    private long id;
+    private Person personId;
     private String userName;
-    private String Rol;
-
+    private String password;
+    private String rol;
+    
     public User() {
     }
+    public Person getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Person personId) {
+        this.personId = personId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
 
     public long getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(long Id) {
-        this.Id = Id;
-    }
-
-    public String getPerson() {
-        return person;
-    }
-
-    public void setPerson(String person) {
-        this.person = person;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -39,10 +49,11 @@ public class User {
     }
 
     public String getRol() {
-        return Rol;
+        return rol;
     }
 
-    public void setRol(String Rol) {
-        this.Rol = Rol;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
+
 }

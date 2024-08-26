@@ -1,23 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package App;
+package app;
+
 import App.config.MYSQLConnection;
+import App.controller_.ControllerInterface;
+import App.controller_.LoginController;
 
 public class App {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        MYSQLConnection controller = new MYSQLConnection();
-		try {
-			controller.getConnection();
-			//MYSQLConnection.getConnection();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+
+        ControllerInterface controller = new LoginController();
+        try {
+            controller.session();
+            MYSQLConnection.getConnection();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
-    
+
 }
