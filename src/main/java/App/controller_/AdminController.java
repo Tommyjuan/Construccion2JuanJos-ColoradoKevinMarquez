@@ -19,7 +19,7 @@ import java.sql.Timestamp;
  */
 public class AdminController implements ControllerInterface {
 
-    private static final String MENU = "ingrese la opcion que desea ejecutar: \n 1. Para crear socio \n 2. Ver facturas (Socios,Invitados)  \n 3. Generar lista de vips\n 4. Para cerrar sesion\n";
+    private static final String MENU = "ingrese la opcion: \n 1.crear socio \n 2. Ver facturas (Socios,Invitados)  \n 3. Generar lista de vips \n 4.cerrar sesion\n";
     private PersonValidator PersonValidator;
     private UserValidator userValidator;
     private AdminService service;
