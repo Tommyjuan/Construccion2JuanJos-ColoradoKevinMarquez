@@ -19,15 +19,14 @@ import java.sql.Timestamp;
  */
 public class AdminController implements ControllerInterface {
 
-    private static final String MENU = "ingrese la opcion: \n 1.crear socio \n 2. Ver facturas (Socios,Invitados)  \n 3. Generar lista de vips \n 4.cerrar sesion\n";
+    private static final String MENU = "ingrese la opcion: \n 1.crear socio  \n 2 .lista de vips \n 3.cerrar sesion ";
     private PersonValidator PersonValidator;
     private UserValidator userValidator;
     private AdminService service;
     private PartnerValidator partnerValidator;
-    private final PersonValidator personValidator;
 
     public AdminController() {
-        this.personValidator = new PersonValidator();
+        this.PersonValidator = new PersonValidator();
         this.userValidator = new UserValidator();
         this.service = new Service();
         this.partnerValidator = new PartnerValidator();
@@ -63,16 +62,13 @@ public class AdminController implements ControllerInterface {
                 return true;
             }
             case "2": {
-                //this.invoiceHistory(); aun no se crea factura, pendiente
+                //agregar lista de vips, recordar tope de 5.
                 return true;
             }
             case "3": {
                 System.out.println("se ha cerrado sesion");
                 return false;
-            }
-            case "4": {
-                System.out.println("se ha cerrado sesion");
-                return false;
+
             }
             default: {
                 System.out.println("ingrese una opcion valida");
@@ -90,18 +86,30 @@ public class AdminController implements ControllerInterface {
     public void createPartner() throws Exception {
         System.out.println("Ingrese el nombre del socio");
         String name = Utils.getReader().nextLine();
-        personValidator.validateName(name);
+        PersonValidator.validateName(name);
         System.out.println("ingrese la cedula");
-        long document = personValidator.validateDocument(Utils.getReader().nextLine());
+        long document = PersonValidator.validateDocument(Utils.getReader().nextLine());
         System.out.println("ingrese el numero de celular");
-        long celPhone = personValidator.validateCelPhone(Utils.getReader().nextLine());
+        long celPhone = PersonValidator.validateCelPhone(Utils.getReader().nextLine());
+        String celPhoneInput;
+
+        while (true) {
+            celPhoneInput = Utils.getReader().nextLine();
+            if (celPhoneInput.matches("\\d{10,}")) { // Verifica que el input tenga al menos 10 dígitos
+                celPhone = Long.parseLong(celPhoneInput);
+                break;
+            } else {
+                System.out.println("El número de celular debe tener al menos 10 dígitos. Inténtelo nuevamente:");
+            }
+        }
+
         System.out.println("ingrese el usuario del socio");
         String userName = Utils.getReader().nextLine();
         userValidator.validateUserName(userName);
         System.out.println("ingrese la contraseña ");
         String password = Utils.getReader().nextLine();
         userValidator.validateUserName(password);
-        System.out.println("Ingrese la cantidad de dinero de socio (50.000 min - 1.000.000 max)");
+        System.out.println("Ingrese la cantidad de dinero de socio (el monto debe ser superior a 50.000 ): ");
         double money = partnerValidator.validateMoney(Utils.getReader().nextLine());
         PersonDto personDto = new PersonDto();
         personDto.setName(name);

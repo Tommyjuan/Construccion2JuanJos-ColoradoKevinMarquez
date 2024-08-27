@@ -11,7 +11,7 @@ public class LoginController implements ControllerInterface {
 
     private UserValidator userValidator;
     private LoginService service;
-    private static final String MENU = "ingrese la opcion: \n 1.iniciar sesion. \n 2.salir.";
+    private static final String MENU = "ingrese la opcion: \n 1.iniciar sesion. \n 2.salir.   ";
     private Map<String, ControllerInterface> rol;
 
     public LoginController() {

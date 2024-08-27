@@ -23,7 +23,7 @@ public class UserDaoImplementation implements UserDao {
             user.setId(resulSet.getLong("ID"));
             user.setUserName(resulSet.getString("USERNAME"));
             user.setPassword(resulSet.getString("PASSWORD"));
-            user.setRol(resulSet.getString("ROL"));
+            user.setRol(resulSet.getString("ROLE"));
             Person person = new Person();
             person.setId(resulSet.getLong("PERSONNID"));
             user.setPersonId(person);
