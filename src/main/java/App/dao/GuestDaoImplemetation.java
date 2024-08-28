@@ -11,10 +11,9 @@ import java.sql.SQLException;
 
 public class GuestDaoImplemetation implements GuestDao {
 
-    @Override
-    public void createGuets(GuestDto guestDto) throws Exception {
+    public void createGuest(GuestDto guestDto) throws Exception {
         Guest guest = Helper.parse(guestDto);
-        String query = "INSERT INTO PARTNER(USERID,PARTNERID,STATUS) VALUES (?, ?,?)";
+        String query = "INSERT INTO guest(USERID,PARTNERID,STATUS) VALUES (?, ?,?)";
         PreparedStatement preparedStatement = MYSQLConnection.getConnection().prepareStatement(query);
         preparedStatement.setLong(1, guest.getUserId().getId());
         preparedStatement.setLong(2, guest.getPartnerId().getId());

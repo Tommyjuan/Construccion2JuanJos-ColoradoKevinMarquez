@@ -38,10 +38,7 @@ public class Service implements AdminService, LoginService, PartnerService {
         this.guestDao = new GuestDaoImplemetation();
     }
 
-    @Override
-    public void createGuest(UserDto userDto) throws Exception {
-        this.createUser(userDto);
-    }
+   
 
     @Override
     public void login(UserDto userDto) throws Exception {
@@ -99,17 +96,19 @@ public class Service implements AdminService, LoginService, PartnerService {
 
 }
     }
-    
+        @Override
         public void createGuest(GuestDto guestDto) throws Exception {
         this.createUser(guestDto.getUserId());
         UserDto userDto = userDao.findByUserName(guestDto.getUserId());
         guestDto.setUserId(userDto);
         PartnerDto partnerDto = partnerDao.existByPartner(user);
+        partnerDto.setUserDto_id(user);
+        guestDto.setStatus("Inactivo");
         guestDto.setPartnerId(partnerDto);
         try {
-            this.guestDao.createGuets(guestDto);
+            this.guestDao.createGuest(guestDto);
         } catch (SQLException e) {
-            this.personDao.deletePerson(userDto.getPersonId());
+            //this.personDao.deletePerson(userDto.getPersonId());
       
            throw new Exception("error al crear el invitador",e);
         }

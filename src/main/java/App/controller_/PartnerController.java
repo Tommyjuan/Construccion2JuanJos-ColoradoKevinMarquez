@@ -3,6 +3,8 @@ package App.controller_;
 import App.controller.validator.PartnerValidator;
 import App.controller.validator.PersonValidator;
 import App.controller.validator.UserValidator;
+import App.service_interface.PartnerService;
+import app.dto.GuestDto;
 import app.service.Service;
 import app.dto.PersonDto;
 import app.dto.UserDto;
@@ -14,11 +16,13 @@ public class PartnerController implements ControllerInterface {
 
     private PersonValidator personValidator;
     private UserValidator userValidator;
+    private PartnerService service;
 
     public PartnerController() {
         this.partnerValidator = new PartnerValidator();
         this.personValidator = new PersonValidator();
         this.userValidator = new UserValidator();
+        this.service=new Service();
     }
 
     @Override
@@ -103,6 +107,9 @@ public class PartnerController implements ControllerInterface {
         userDto.setUserName(userName);
         userDto.setPassword(password);
         userDto.setRol("Guest");
+        GuestDto guestDto = new GuestDto();
+        guestDto.setUserId(userDto);
+        this.service.createGuest(guestDto);
     }
 
     private void newFounds() throws Exception {

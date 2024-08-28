@@ -5,6 +5,6 @@ import app.dto.UserDto;
 
 public interface GuestDao {
 
-    public void createGuets(GuestDto guestDto) throws Exception;
+    public void createGuest(GuestDto guestDto) throws Exception;
 
 }

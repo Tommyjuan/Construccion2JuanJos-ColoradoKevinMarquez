@@ -6,6 +6,7 @@ import app.dto.PartnerDto;
 import app.dto.UserDto;
 import App.helpers.Helper;
 import app.model.Partner;
+import app.model.Person;
 import app.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,6 +44,8 @@ public class PartnerDaoImplemetation implements PartnerDao {
             partner.setType(resulSet.getString("TYPE"));
             partner.setDateCreated(resulSet.getTimestamp("CREATIONDATE"));
             User user = new User();
+            Person personId = new Person();
+            user.setPersonId(personId);
             user.setId(resulSet.getLong("USERID"));
             partner.setUser_id(user);
             resulSet.close();

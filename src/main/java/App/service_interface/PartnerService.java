@@ -5,9 +5,10 @@
 package App.service_interface;
 
 
+import app.dto.GuestDto;
 import app.dto.UserDto;
 
 public interface PartnerService {
-    public void createGuest (UserDto userDto) throws Exception;
+    public void createGuest (GuestDto guestDto) throws Exception;
      
 }
