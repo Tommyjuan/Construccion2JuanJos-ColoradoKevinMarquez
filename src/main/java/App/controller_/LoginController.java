@@ -36,7 +36,6 @@ public class LoginController implements ControllerInterface {
 
     }
 
-    
     private boolean menu() {
         try {
             System.out.println(MENU);
@@ -82,5 +81,5 @@ public class LoginController implements ControllerInterface {
         rol.get(userDto.getRol()).session();
 
     }
-    
+
 }

@@ -6,6 +6,7 @@ import app.dto.PartnerDto;
 import app.dto.UserDto;
 import App.helpers.Helper;
 import app.model.Partner;
+import app.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -30,8 +31,28 @@ public class PartnerDaoImplemetation implements PartnerDao {
     }
 
     @Override
-    public boolean existsByUser(UserDto userDto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public PartnerDto existByPartner(UserDto userDto) throws Exception {
+        String query = "SELECT ID,USERID,AMOUNT,TYPE,CREATIONDATE FROM PARTNER WHERE USERID = ?";
+        PreparedStatement preparedStatement = MYSQLConnection.getConnection().prepareStatement(query);
+        preparedStatement.setLong(1, userDto.getId());
+        ResultSet resulSet = preparedStatement.executeQuery();
+        if (resulSet.next()) {
+            Partner partner = new Partner();
+            partner.setId(resulSet.getLong("ID"));
+            partner.setMoney(resulSet.getDouble("AMOUNT"));
+            partner.setType(resulSet.getString("TYPE"));
+            partner.setDateCreated(resulSet.getTimestamp("CREATIONDATE"));
+            User user = new User();
+            user.setId(resulSet.getLong("USERID"));
+            partner.setUser_id(user);
+            resulSet.close();
+            preparedStatement.close();
+            return Helper.parse(partner);
+        }
+        resulSet.close();
+        preparedStatement.close();
+        return null;
+
     }
 
 }

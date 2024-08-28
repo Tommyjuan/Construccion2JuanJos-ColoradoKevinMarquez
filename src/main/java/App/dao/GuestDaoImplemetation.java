@@ -1,4 +1,3 @@
-
 package App.dao;
 
 import App.config.MYSQLConnection;
@@ -12,8 +11,8 @@ import java.sql.SQLException;
 
 public class GuestDaoImplemetation implements GuestDao {
 
-    public void createGuest(GuestDto guestDto) throws SQLException {
-        
+    @Override
+    public void createGuets(GuestDto guestDto) throws Exception {
         Guest guest = Helper.parse(guestDto);
         String query = "INSERT INTO PARTNER(USERID,PARTNERID,STATUS) VALUES (?, ?,?)";
         PreparedStatement preparedStatement = MYSQLConnection.getConnection().prepareStatement(query);
@@ -22,21 +21,6 @@ public class GuestDaoImplemetation implements GuestDao {
         preparedStatement.setString(3, guest.getStatus());
         preparedStatement.execute();
         preparedStatement.close();
-    }
-
-    @Override
-    public void createPartner(GuestDto guestDto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void deletePartner(GuestDto guestDto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean existsByUser(UserDto userDto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

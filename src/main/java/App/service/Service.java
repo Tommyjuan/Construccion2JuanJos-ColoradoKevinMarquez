@@ -1,5 +1,6 @@
 package app.service;
 
+import App.dao.GuestDaoImplemetation;
 import App.dao.PartnerDaoImplemetation;
 import App.dao.PersonDaoImplementation;
 import App.dao.UserDaoImplementation;
@@ -34,6 +35,7 @@ public class Service implements AdminService, LoginService, PartnerService {
         this.userDao = new UserDaoImplementation();
         this.personDao = new PersonDaoImplementation();
         this.partnerDao = new PartnerDaoImplemetation();
+        this.guestDao = new GuestDaoImplemetation();
     }
 
     @Override
@@ -96,5 +98,20 @@ public class Service implements AdminService, LoginService, PartnerService {
             throw new Exception("error al crear el usuario");
 
 }
+    }
+    
+        public void createGuest(GuestDto guestDto) throws Exception {
+        this.createUser(guestDto.getUserId());
+        UserDto userDto = userDao.findByUserName(guestDto.getUserId());
+        guestDto.setUserId(userDto);
+        PartnerDto partnerDto = partnerDao.existByPartner(user);
+        guestDto.setPartnerId(partnerDto);
+        try {
+            this.guestDao.createGuets(guestDto);
+        } catch (SQLException e) {
+            this.personDao.deletePerson(userDto.getPersonId());
+      
+           throw new Exception("error al crear el invitador",e);
+        }
     }
 }
