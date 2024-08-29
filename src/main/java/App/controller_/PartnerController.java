@@ -106,7 +106,7 @@ public class PartnerController implements ControllerInterface {
         userDto.setPersonId(personDto);
         userDto.setUserName(userName);
         userDto.setPassword(password);
-        userDto.setRol("Guest");
+        userDto.setRol("guest");
         GuestDto guestDto = new GuestDto();
         guestDto.setUserId(userDto);
         this.service.createGuest(guestDto);
