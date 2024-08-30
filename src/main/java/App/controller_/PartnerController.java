@@ -12,7 +12,7 @@ import app.dto.UserDto;
 public class PartnerController implements ControllerInterface {
 
     private PartnerValidator partnerValidator;
-    private static final String MENU = "ingrese la opcion : \n 1.crear invitado. \n 2.dar de baja \n 3.cerrar sesion \n";
+    private static final String MENU = "ingrese la opcion : \n 1.crear invitado. \n 2.dar de baja \n 3. activar invitado \n 4. desactivar invitado \n 5. solicitud VIP \n 6. consignar al monto \n 7.cerrar sesion \n";
 
     private PersonValidator personValidator;
     private UserValidator userValidator;
