@@ -28,7 +28,12 @@ public class PartnerDaoImplemetation implements PartnerDao {
 
     @Override
     public void deletePartner(PartnerDto partnerDto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Partner partner = Helper.parse(partnerDto);
+        String query = "DELETE FROM PARTNER WHERE USERID = ?";
+        PreparedStatement preparedStatement = MYSQLConnection.getConnection().prepareStatement(query);
+        preparedStatement.setLong(1, partner.getUser_id().getId());
+        preparedStatement.execute();
+        preparedStatement.close();
     }
 
     @Override

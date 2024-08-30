@@ -53,4 +53,5 @@ public class PartnerDto {
         this.dateCreated = dateCreated;
     }
 
+
 }

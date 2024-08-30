@@ -7,4 +7,7 @@ public interface GuestDao {
 
     public void createGuest(GuestDto guestDto) throws Exception;
 
+    public void deleteGuest(GuestDto guestDto) throws Exception;
+
+    public GuestDto existByGuest(UserDto userDto) throws Exception;
 }

@@ -20,6 +20,10 @@ public abstract class Helper {
 
     // Son conversiones
     public static PersonDto parse(Person person) {
+        
+        if (person == null) {
+            return null; 
+        }
         PersonDto personDto = new PersonDto();
         personDto.setId(person.getId());
         personDto.setDocument(person.getDocument());
@@ -29,6 +33,10 @@ public abstract class Helper {
     }
 
     public static Person parse(PersonDto personDto) {
+        
+        if (personDto == null) {
+            return null; 
+        }
         Person person = new Person();
         person.setId(personDto.getId());
         person.setDocument(personDto.getDocument());
@@ -38,6 +46,10 @@ public abstract class Helper {
     }
 
     public static UserDto parse(User user) {
+        
+        if (user == null) {
+            return null; 
+        }
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setPassword(user.getPassword());
@@ -48,6 +60,10 @@ public abstract class Helper {
     }
 
     public static User parse(UserDto userDto) {
+        
+        if (userDto== null) {
+            return null; 
+        }
         User user = new User();
         user.setId(userDto.getId());
         user.setPassword(userDto.getPassword());
@@ -58,6 +74,10 @@ public abstract class Helper {
     }
 
     	public static Partner parse(PartnerDto partnerDto) {
+            
+        if (partnerDto == null) {
+            return null; 
+        }
 		Partner  partner = new Partner();
 		partner .setId(partnerDto.getId());
 		partner .setUser_id(parse(partnerDto.getUserDto_id()));
@@ -68,6 +88,10 @@ public abstract class Helper {
 	}
 	
 	public static PartnerDto parse(Partner partner) {
+            
+        if (partner == null) {
+            return null; 
+        }
 		PartnerDto partnerDto = new PartnerDto();
 		partnerDto.setId(partner.getId());
 		partnerDto.setUserDto_id(parse(partner.getUser_id()));

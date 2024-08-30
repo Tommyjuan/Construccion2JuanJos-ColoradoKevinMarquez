@@ -113,4 +113,44 @@ public class Service implements AdminService, LoginService, PartnerService {
            throw new Exception("error al crear el invitador",e);
         }
     }
+
+    @Override
+    public void changeRole(PartnerDto partnerDto) throws Exception {
+        UserDto users = Service.user;
+        GuestDto guestDto = this.guestDao.existByGuest(users);
+        this.guestDao.deleteGuest(guestDto);
+        UserDto userDto = userDao.findByUserName(users);
+        partnerDto.setUserDto_id(userDto);
+        userDto.setRol("partner");
+        this.userDao.uptadeUserRole(userDto);
+        try {
+            this.partnerDao.createPartner(partnerDto);
+            System.out.println("Se ha convertido el Guest en Partner exitosamente.");
+            
+        } catch (SQLException e) {
+            System.out.println("El usuario no existe en la base de datos.");
+        }
+
+
+    }
+
+    @Override
+    public void deletePartner() throws Exception {
+
+        UserDto users = Service.user;
+        try {
+            PartnerDto partnerDto = this.partnerDao.existByPartner(users);
+            UserDto userDto = this.userDao.findByUserName(users);
+            this.userDao.existsByUserName(userDto);
+
+            this.partnerDao.deletePartner(partnerDto);
+            this.userDao.deleteUser(userDto);
+            this.personDao.deletePerson(userDto.getPersonId());
+            System.out.println("Su cuenta ha sido eliminada exitosamente.");
+
+        } catch (SQLException e) {
+            System.out.println("El usuario no existe en la base de datos.");
+        }
+    }   
+    
 }

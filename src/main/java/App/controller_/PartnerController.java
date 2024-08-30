@@ -12,7 +12,7 @@ import app.dto.UserDto;
 public class PartnerController implements ControllerInterface {
 
     private PartnerValidator partnerValidator;
-    private static final String MENU = "ingrese la opcion : \n 1.crear invitado. \n 2.agregar fondos. \n 3.cerrar sesion   ";
+    private static final String MENU = "ingrese la opcion : \n 1.crear invitado. \n 2.dar de baja \n 3.cerrar sesion \n";
 
     private PersonValidator personValidator;
     private UserValidator userValidator;
@@ -53,7 +53,7 @@ public class PartnerController implements ControllerInterface {
                 return true;
             }
             case "2": {
-                this.newFounds();
+                this.deletePartner();
                 return true;
             }
             case "3": {
@@ -112,10 +112,11 @@ public class PartnerController implements ControllerInterface {
         this.service.createGuest(guestDto);
     }
 
-    private void newFounds() throws Exception {
-        System.out.println("Cuanto quiere ingresar?");
-        String money = Utils.getReader().nextLine();
-        partnerValidator.validateMoney(money);
+
+    
+    public void deletePartner() throws Exception {
+        this.service.deletePartner();
+
     }
 
 }

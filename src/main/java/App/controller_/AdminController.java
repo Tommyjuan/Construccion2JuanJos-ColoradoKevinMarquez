@@ -19,7 +19,7 @@ import java.sql.Timestamp;
  */
 public class AdminController implements ControllerInterface {
 
-    private static final String MENU = "ingrese la opcion: \n 1.crear socio  \n 2 .lista de vips \n 3.cerrar sesion \n  ";
+    private static final String MENU = "ingrese la opcion: \n 1.crear socio  \n 2 .lista de vips \n 3.cerrar sesion \n";
     private PersonValidator PersonValidator;
     private UserValidator userValidator;
     private AdminService service;
@@ -109,8 +109,7 @@ public class AdminController implements ControllerInterface {
         System.out.println("ingrese la contraseña ");
         String password = Utils.getReader().nextLine();
         userValidator.validateUserName(password);
-        System.out.println("Ingrese la cantidad de dinero de socio (el monto debe ser superior a 50.000 ): ");
-        double money = partnerValidator.validateMoney(Utils.getReader().nextLine());
+
         PersonDto personDto = new PersonDto();
         personDto.setName(name);
         personDto.setDocument(document);
@@ -122,17 +121,14 @@ public class AdminController implements ControllerInterface {
         userDto.setRol("partner");
         PartnerDto partnerDto = new PartnerDto();
         partnerDto.setUserDto_id(userDto);
-        partnerDto.setMoney(money);
+        partnerDto.setMoney(50000);
         partnerDto.setDateCreated(new Timestamp(System.currentTimeMillis()));
-        if (money < 1000000) {
-            partnerDto.setType("regular");
-        } else {
-            partnerDto.setType("Vip");
-        }
-
+        partnerDto.setType("regular");
+        
         System.out.println("se ha creado el usuario exitosamente ");
         System.out.println("Tipo de socio: " + partnerDto.getType());
-        System.out.println("Y se creo en el momento " + partnerDto.getDateCreated());
+        System.out.println("Sus ingresos actuales son de:" + partnerDto.getMoney());
+        System.out.println("fecha y hora de creacion:  " + partnerDto.getDateCreated());
         this.service.createPartner(partnerDto);
     }
 
