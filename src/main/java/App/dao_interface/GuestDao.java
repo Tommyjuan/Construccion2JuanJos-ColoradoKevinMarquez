@@ -10,4 +10,8 @@ public interface GuestDao {
     public void deleteGuest(GuestDto guestDto) throws Exception;
 
     public GuestDto existByGuest(UserDto userDto) throws Exception;
+
+    public void changeStatus(GuestDto guestDto) throws Exception;
+
+    public GuestDto getGuestById(long guestId) throws Exception;
 }

@@ -1,5 +1,6 @@
 package App.controller_;
 
+import App.controller.validator.GuestValidator;
 import App.controller.validator.PartnerValidator;
 import App.controller.validator.PersonValidator;
 import App.controller.validator.UserValidator;
@@ -12,17 +13,18 @@ import app.dto.UserDto;
 public class PartnerController implements ControllerInterface {
 
     private PartnerValidator partnerValidator;
-    private static final String MENU = "ingrese la opcion : \n 1.crear invitado. \n 2.dar de baja \n 3. activar invitado \n 4. desactivar invitado \n 5. solicitud VIP \n 6. consignar al monto \n 7.cerrar sesion \n";
+    private static final String MENU = "ingrese la opcion : \n 1.crear invitado. \n 2.dar de baja \n 3. activar/desactivar invitado \n 4. solicitud VIP \n 5. consignar al monto \n 6.cerrar sesion \n";
 
     private PersonValidator personValidator;
     private UserValidator userValidator;
+    private GuestValidator guestValidator;
     private PartnerService service;
 
     public PartnerController() {
         this.partnerValidator = new PartnerValidator();
         this.personValidator = new PersonValidator();
         this.userValidator = new UserValidator();
-        this.service=new Service();
+        this.service = new Service();
     }
 
     @Override
@@ -57,6 +59,11 @@ public class PartnerController implements ControllerInterface {
                 return true;
             }
             case "3": {
+                this.changeStatus();
+
+                return false;
+            }
+            case "4": {
                 System.out.println("se ha cerrado sesión");
                 return false;
             }
@@ -112,10 +119,26 @@ public class PartnerController implements ControllerInterface {
         this.service.createGuest(guestDto);
     }
 
-
-    
     public void deletePartner() throws Exception {
         this.service.deletePartner();
+
+    }
+    
+     public void changeStatus()throws Exception{
+        System.out.println("Ingrese el ID del invitado cuyo estado desea cambiar:");
+        long guestId = Long.parseLong(Utils.getReader().nextLine());
+        GuestDto guestDto = service.getGuestById(guestId); 
+            if (guestDto == null) {
+            System.out.println("Invitado no encontrado.");
+            return;
+        }
+         System.out.println("Ingrese el nuevo estado (activo/inactivo):");
+        String Status = Utils.getReader().nextLine();
+
+
+        guestDto.setStatus(Status);
+        service.updateGuestStatus(guestDto);
+        System.out.println("Estado del invitado actualizado exitosamente.");
 
     }
 

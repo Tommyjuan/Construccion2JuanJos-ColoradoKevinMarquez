@@ -151,6 +151,17 @@ public class Service implements AdminService, LoginService, PartnerService {
         } catch (SQLException e) {
             System.out.println("El usuario no existe en la base de datos.");
         }
-    }   
+    }
+    
+    
+    @Override
+    public GuestDto getGuestById(long guestId) throws Exception {
+       return guestDao.getGuestById(guestId);
+    }
+
+    @Override
+    public void updateGuestStatus(GuestDto guestDto) throws Exception {
+        guestDao.changeStatus(guestDto);
+    }
     
 }

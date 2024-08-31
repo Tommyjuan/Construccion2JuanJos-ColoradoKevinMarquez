@@ -12,17 +12,13 @@ import app.model.User;
 import app.model.Partner;
 import app.dto.PartnerDto;
 
-
-
-
-
 public abstract class Helper {
 
     // Son conversiones
     public static PersonDto parse(Person person) {
-        
+
         if (person == null) {
-            return null; 
+            return null;
         }
         PersonDto personDto = new PersonDto();
         personDto.setId(person.getId());
@@ -33,9 +29,9 @@ public abstract class Helper {
     }
 
     public static Person parse(PersonDto personDto) {
-        
+
         if (personDto == null) {
-            return null; 
+            return null;
         }
         Person person = new Person();
         person.setId(personDto.getId());
@@ -46,9 +42,9 @@ public abstract class Helper {
     }
 
     public static UserDto parse(User user) {
-        
+
         if (user == null) {
-            return null; 
+            return null;
         }
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
@@ -60,9 +56,9 @@ public abstract class Helper {
     }
 
     public static User parse(UserDto userDto) {
-        
-        if (userDto== null) {
-            return null; 
+
+        if (userDto == null) {
+            return null;
         }
         User user = new User();
         user.setId(userDto.getId());
@@ -73,54 +69,58 @@ public abstract class Helper {
         return user;
     }
 
-    	public static Partner parse(PartnerDto partnerDto) {
-            
+    public static Partner parse(PartnerDto partnerDto) {
+
         if (partnerDto == null) {
-            return null; 
+            return null;
         }
-		Partner  partner = new Partner();
-		partner .setId(partnerDto.getId());
-		partner .setUser_id(parse(partnerDto.getUserDto_id()));
-		partner .setMoney(partnerDto.getMoney());
-		partner .setType(partnerDto.getType());
-		partner .setDateCreated(partnerDto.getDateCreated());
-		return partner;
-	}
-	
-	public static PartnerDto parse(Partner partner) {
-            
+        Partner partner = new Partner();
+        partner.setId(partnerDto.getId());
+        partner.setUser_id(parse(partnerDto.getUserDto_id()));
+        partner.setMoney(partnerDto.getMoney());
+        partner.setType(partnerDto.getType());
+        partner.setDateCreated(partnerDto.getDateCreated());
+        return partner;
+    }
+
+    public static PartnerDto parse(Partner partner) {
+
         if (partner == null) {
-            return null; 
+            return null;
         }
-		PartnerDto partnerDto = new PartnerDto();
-		partnerDto.setId(partner.getId());
-		partnerDto.setUserDto_id(parse(partner.getUser_id()));
-		partnerDto.setMoney(partner.getMoney());
-		partnerDto.setDateCreated(partner.getDateCreated());
-		
-		return partnerDto;
-	}
-    
-        
-	public static Guest parse(GuestDto guestDto) {
-		Guest guest  = new Guest();
-		guest.setId(guestDto.getId());
-		guest.setUserId(parse(guestDto.getUserId()));
-		guest.setPartnerId(parse(guestDto.getPartnerId()));
-		guest.setStatus(guestDto.getStatus());
-		
-		return guest;
-	}
-	
-	public static GuestDto parse(Guest guest) {
-		GuestDto guestDto  = new GuestDto();
-		guestDto .setId(guest.getId());
-		guestDto .setUserId(parse(guest.getUserId()));
-		guestDto .setPartnerId(parse(guest.getPartnerId()));
-		guestDto .setStatus(guest.getStatus());
-		
-		return guestDto;
-	}
-    
-    
+        PartnerDto partnerDto = new PartnerDto();
+        partnerDto.setId(partner.getId());
+        partnerDto.setUserDto_id(parse(partner.getUser_id()));
+        partnerDto.setMoney(partner.getMoney());
+        partnerDto.setDateCreated(partner.getDateCreated());
+
+        return partnerDto;
+    }
+
+    public static Guest parse(GuestDto guestDto) {
+        if (guestDto == null) {
+            return null;
+        }
+        Guest guest = new Guest();
+        guest.setId(guestDto.getId());
+        guest.setUserId(parse(guestDto.getUserId()));
+        guest.setPartnerId(parse(guestDto.getPartnerId()));
+        guest.setStatus(guestDto.getStatus());
+
+        return guest;
+    }
+
+    public static GuestDto parse(Guest guest) {
+        if (guest == null) {
+            return null;
+        }
+        GuestDto guestDto = new GuestDto();
+        guestDto.setId(guest.getId());
+        guestDto.setUserId(parse(guest.getUserId()));
+        guestDto.setPartnerId(parse(guest.getPartnerId()));
+        guestDto.setStatus(guest.getStatus());
+
+        return guestDto;
+    }
+
 }

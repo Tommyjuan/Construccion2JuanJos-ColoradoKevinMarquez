@@ -32,7 +32,7 @@ public class GuestDaoImplemetation implements GuestDao {
 
     @Override
     public GuestDto existByGuest(UserDto userDto) throws Exception {
-         String query = "SELECT ID,USERID,PARTNERID,STATUS FROM GUEST WHERE USERID = ?";
+        String query = "SELECT ID,USERID,PARTNERID,STATUS FROM GUEST WHERE USERID = ?";
         PreparedStatement preparedStatement = MYSQLConnection.getConnection().prepareStatement(query);
         preparedStatement.setLong(1, userDto.getId());
         ResultSet resulSet = preparedStatement.executeQuery();
@@ -43,10 +43,10 @@ public class GuestDaoImplemetation implements GuestDao {
             User user = new User();
             user.setId(resulSet.getLong("USERID"));
             guest.setUserId(user);
-            Partner partner=new Partner();
+            Partner partner = new Partner();
             partner.setId(resulSet.getLong("PARTNERID"));
             guest.setPartnerId(partner);
-            resulSet.close(); 
+            resulSet.close();
             preparedStatement.close();
             return Helper.parse(guest);
         }
@@ -54,7 +54,39 @@ public class GuestDaoImplemetation implements GuestDao {
         preparedStatement.close();
         return null;
     }
-    
-    
 
+    @Override
+    public void changeStatus(GuestDto guestDto) throws Exception {
+        String query = "UPDATE GUEST SET STATUS = ? WHERE USERID = ?";
+        PreparedStatement preparedStatement = MYSQLConnection.getConnection().prepareStatement(query);
+        preparedStatement.setString(1, guestDto.getStatus());
+        preparedStatement.setLong(2, guestDto.getUserId().getId());
+        preparedStatement.executeUpdate();
+    }
+    
+       @Override
+    public GuestDto getGuestById(long guestId) throws Exception {
+        String query = "SELECT ID,USERID,PARTNERID,STATUS FROM GUEST WHERE ID = ?";
+        PreparedStatement preparedStatement = MYSQLConnection.getConnection().prepareStatement(query);
+        preparedStatement.setLong(1, guestId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            Guest guest = new Guest();
+            guest.setId(resultSet.getLong("ID"));
+            guest.setStatus(resultSet.getString("STATUS"));
+            User user = new User();
+            user.setId(resultSet.getLong("USERID"));
+            guest.setUserId(user);
+            Partner partner = new Partner();
+            partner.setId(resultSet.getLong("PARTNERID"));
+            guest.setPartnerId(partner);
+
+            resultSet.close();
+            return Helper.parse(guest);
+        } else {
+            resultSet.close();
+            return null;
+
+        }
+    }
 }
