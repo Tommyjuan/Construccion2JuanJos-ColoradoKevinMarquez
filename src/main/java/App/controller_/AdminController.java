@@ -19,7 +19,7 @@ import java.sql.Timestamp;
  */
 public class AdminController implements ControllerInterface {
 
-    private static final String MENU = "ingrese la opcion: \n 1.crear socio  \n 2 .lista de vips \n 3.cerrar sesion \n";
+    private static final String MENU = "ingrese la opcion: \n 1.crear socio   \n 2.cerrar sesion \n";
     private PersonValidator PersonValidator;
     private UserValidator userValidator;
     private AdminService service;
@@ -62,14 +62,10 @@ public class AdminController implements ControllerInterface {
                 return true;
             }
             case "2": {
-                //agregar lista de vips, recordar tope de 5.
+                System.out.println("se ha cerrado sesion exitosamente");
                 return true;
             }
-            case "3": {
-                System.out.println("se ha cerrado sesion");
-                return false;
 
-            }
             default: {
                 System.out.println("ingrese una opcion valida");
                 return true;
@@ -124,7 +120,7 @@ public class AdminController implements ControllerInterface {
         partnerDto.setMoney(50000);
         partnerDto.setDateCreated(new Timestamp(System.currentTimeMillis()));
         partnerDto.setType("regular");
-        
+
         System.out.println("se ha creado el usuario exitosamente ");
         System.out.println("Tipo de socio: " + partnerDto.getType());
         System.out.println("Sus ingresos actuales son de:" + partnerDto.getMoney());

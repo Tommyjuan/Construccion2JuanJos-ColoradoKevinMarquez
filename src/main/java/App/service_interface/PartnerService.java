@@ -19,6 +19,6 @@ public interface PartnerService {
 
     public void checkVipLimit(PartnerDto partnerDto) throws Exception;
 
-    public void guestLimit(PartnerDto partnerDto) throws Exception;
+    public void promocionV() throws Exception;
 
 }

@@ -134,4 +134,14 @@ public class PartnerDaoImplemetation implements PartnerDao {
         preparedStatement.close();
         return count;
     }
+
+    @Override
+    public void updatePartnerType(PartnerDto partnerDto) throws Exception {
+        String query = "UPDATE PARTNER SET TYPE = ? WHERE ID = ?";
+        PreparedStatement preparedStatement = MYSQLConnection.getConnection().prepareStatement(query);
+        preparedStatement.setString(1, partnerDto.getType());
+        preparedStatement.setLong(2, partnerDto.getId());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
 }

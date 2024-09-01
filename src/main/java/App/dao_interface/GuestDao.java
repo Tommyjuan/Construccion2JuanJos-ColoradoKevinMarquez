@@ -15,6 +15,5 @@ public interface GuestDao {
 
     public GuestDto getGuestById(long guestId) throws Exception;
 
-    public int countGuests(long partnerId) throws Exception;
 
 }

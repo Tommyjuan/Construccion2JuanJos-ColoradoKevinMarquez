@@ -92,19 +92,6 @@ public class GuestDaoImplemetation implements GuestDao {
 
  
 
-    @Override
-    public int countGuests(long partnerId) throws Exception {
-        String query = "SELECT COUNT(*) AS count FROM GUEST WHERE PARTNERID = ? AND STATUS = 'activo'";
-        PreparedStatement preparedStatement = MYSQLConnection.getConnection().prepareStatement(query);
-        preparedStatement.setLong(1, partnerId);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        int count = 0;
-        if (resultSet.next()) {
-            count = resultSet.getInt("count");
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return count;
-    }
+
 
 }

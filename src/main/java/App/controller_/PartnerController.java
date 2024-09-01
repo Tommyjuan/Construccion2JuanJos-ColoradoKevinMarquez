@@ -64,8 +64,9 @@ public class PartnerController implements ControllerInterface {
                 return true;
             }
             case "4": {
-                System.out.println("se ha cerrado sesión");
-                return false;
+                this.service.promocionV();
+
+                return true;
             }
 
             case "5": {
@@ -150,9 +151,13 @@ public class PartnerController implements ControllerInterface {
 
     }
 
-    private void newFound() throws Exception{
+    private void newFound() throws Exception {
         this.service.updateMoney();
 
+    }
+
+    private void promocionV() throws Exception {
+        this.service.promocionV();
     }
 
 }

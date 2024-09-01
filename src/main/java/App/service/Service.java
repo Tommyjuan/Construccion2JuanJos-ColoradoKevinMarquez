@@ -193,7 +193,6 @@ public class Service implements AdminService, LoginService, PartnerService {
         guestDao.changeStatus(guestDto);
     }
 
-
     @Override
     public void checkVipLimit(PartnerDto partnerDto) throws Exception {
 
@@ -201,20 +200,32 @@ public class Service implements AdminService, LoginService, PartnerService {
             int vipCount = this.partnerDao.countVip();
             final int vip = 5;
             if (vipCount >= vip) {
-                throw new Exception("El número máximo de socios VIP ya ha sido alcanzado.");
+                throw new Exception("El número máximo de  VIP  alcanzado.");
             }
         }
     }
 
     @Override
-    public void guestLimit(PartnerDto partnerDto) throws Exception {
+    public void promocionV() throws Exception {
+
+        PartnerDto partnerDto = this.partnerDao.existByPartner(user);
+        checkVipLimit(partnerDto);
         if ("regular".equals(partnerDto.getType())) {
-            int guestCount = this.guestDao.countGuests(partnerDto.getId());
-            final int guest = 3;
-            if (guestCount >= guest) {
-                throw new Exception("El numero maximo de invitados a sido alcanzado.");
+
+            int vipCount = partnerDao.countVip();
+            final int vip = 5;
+            partnerDto.setType("vip");
+            if (vipCount >= vip) {
+                throw new Exception("El número máximo de socios VIP ya ha sido alcanzado.");
             }
+            partnerDto.setType("vip");
+            this.partnerDao.updatePartnerType(partnerDto);
+            System.out.println("Tu solicitud de promoción a VIP ha sido procesada.");
+        } else {
+            System.out.println("Ya eres un socio VIP o no eres un socio regular.");
+
         }
+
     }
 
 }
