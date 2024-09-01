@@ -10,4 +10,12 @@ public interface PartnerDao {
     public void deletePartner(PartnerDto partnerDto) throws Exception;
 
     public PartnerDto existByPartner(UserDto userDto) throws Exception;
+
+    public PartnerDto getMoney(double getMoney) throws Exception;
+
+    public void updateMoney(PartnerDto partnerDto) throws Exception;
+
+    public PartnerDto getType(PartnerDto partnerDto) throws Exception;
+         
+     public int countVip() throws Exception;
 }

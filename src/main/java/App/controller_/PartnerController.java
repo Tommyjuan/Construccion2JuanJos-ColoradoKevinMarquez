@@ -61,9 +61,18 @@ public class PartnerController implements ControllerInterface {
             case "3": {
                 this.changeStatus();
 
-                return false;
+                return true;
             }
             case "4": {
+                System.out.println("se ha cerrado sesión");
+                return false;
+            }
+
+            case "5": {
+                this.newFound();
+                return true;
+            }
+            case "6": {
                 System.out.println("se ha cerrado sesión");
                 return false;
             }
@@ -123,22 +132,26 @@ public class PartnerController implements ControllerInterface {
         this.service.deletePartner();
 
     }
-    
-     public void changeStatus()throws Exception{
-        System.out.println("Ingrese el ID del invitado cuyo estado desea cambiar:");
+
+    public void changeStatus() throws Exception {
+        System.out.println("Ingrese el ID del invitado:");
         long guestId = Long.parseLong(Utils.getReader().nextLine());
-        GuestDto guestDto = service.getGuestById(guestId); 
-            if (guestDto == null) {
-            System.out.println("Invitado no encontrado.");
+        GuestDto guestDto = service.getGuestById(guestId);
+        if (guestDto == null) {
+            System.out.println("-Invitado no existe-");
             return;
         }
-         System.out.println("Ingrese el nuevo estado (activo/inactivo):");
+        System.out.println("Ingresar nuevo estado (activo o inactivo): ");
         String Status = Utils.getReader().nextLine();
 
-
         guestDto.setStatus(Status);
-        service.updateGuestStatus(guestDto);
-        System.out.println("Estado del invitado actualizado exitosamente.");
+        service.updateStatus(guestDto);
+        System.out.println("Estado actualizado exitosamente.");
+
+    }
+
+    private void newFound() throws Exception{
+        this.service.updateMoney();
 
     }
 

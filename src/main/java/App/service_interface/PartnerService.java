@@ -13,5 +13,12 @@ public interface PartnerService {
 
     GuestDto getGuestById(long guestId) throws Exception;
 
-    public void updateGuestStatus(GuestDto guestDto) throws Exception;
+    public void updateStatus(GuestDto guestDto) throws Exception;
+
+    public void updateMoney() throws Exception;
+
+    public void checkVipLimit(PartnerDto partnerDto) throws Exception;
+
+    public void guestLimit(PartnerDto partnerDto) throws Exception;
+
 }

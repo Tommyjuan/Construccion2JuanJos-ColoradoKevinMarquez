@@ -1,5 +1,6 @@
 package app.service;
 
+import App.controller_.Utils;
 import App.dao.GuestDaoImplemetation;
 import App.dao.PartnerDaoImplemetation;
 import App.dao.PersonDaoImplementation;
@@ -29,6 +30,7 @@ public class Service implements AdminService, LoginService, PartnerService {
     private InvoiceDetailDao invoiceDetailDao;
     private InvoiceDao invoiceDao;
     private GuestDao guestDao;
+    private double newFound;
     public static UserDto user;
 
     public Service() {
@@ -37,8 +39,6 @@ public class Service implements AdminService, LoginService, PartnerService {
         this.partnerDao = new PartnerDaoImplemetation();
         this.guestDao = new GuestDaoImplemetation();
     }
-
-   
 
     @Override
     public void login(UserDto userDto) throws Exception {
@@ -55,7 +55,7 @@ public class Service implements AdminService, LoginService, PartnerService {
     }
 
     @Override
-    
+
     public void logout() {
         user = null;
         System.out.println("se ha cerrado sesion");
@@ -83,21 +83,23 @@ public class Service implements AdminService, LoginService, PartnerService {
     }
 
     @Override
-    
+
     public void createPartner(PartnerDto partnerDto) throws Exception {
+        checkVipLimit(partnerDto);
         this.createUser(partnerDto.getUserDto_id());
-       UserDto userDto = userDao.findByUserName(partnerDto.getUserDto_id());
+        UserDto userDto = userDao.findByUserName(partnerDto.getUserDto_id());
         partnerDto.setUserDto_id(userDto);
-       try {
+        try {
             this.partnerDao.createPartner(partnerDto);
-       } catch (SQLException e) {
+        } catch (SQLException e) {
             this.personDao.deletePerson(userDto.getPersonId());
             throw new Exception("error al crear el usuario");
 
-}
+        }
     }
-        @Override
-        public void createGuest(GuestDto guestDto) throws Exception {
+
+    @Override
+    public void createGuest(GuestDto guestDto) throws Exception {
         this.createUser(guestDto.getUserId());
         UserDto userDto = userDao.findByUserName(guestDto.getUserId());
         guestDto.setUserId(userDto);
@@ -109,8 +111,8 @@ public class Service implements AdminService, LoginService, PartnerService {
             this.guestDao.createGuest(guestDto);
         } catch (SQLException e) {
             //this.personDao.deletePerson(userDto.getPersonId());
-      
-           throw new Exception("error al crear el invitador",e);
+
+            throw new Exception("error al crear el invitador", e);
         }
     }
 
@@ -126,11 +128,10 @@ public class Service implements AdminService, LoginService, PartnerService {
         try {
             this.partnerDao.createPartner(partnerDto);
             System.out.println("Se ha convertido el Guest en Partner exitosamente.");
-            
+
         } catch (SQLException e) {
             System.out.println("El usuario no existe en la base de datos.");
         }
-
 
     }
 
@@ -152,16 +153,68 @@ public class Service implements AdminService, LoginService, PartnerService {
             System.out.println("El usuario no existe en la base de datos.");
         }
     }
-    
-    
-    @Override
-    public GuestDto getGuestById(long guestId) throws Exception {
-       return guestDao.getGuestById(guestId);
+
+    public void updateMoney() throws Exception {
+        UserDto users = Service.user;
+        PartnerDto partnerDto = partnerDao.existByPartner(users);
+        System.out.println("su tipo es :" + partnerDto.getType());
+        System.out.println("su tipo es :" + users.getUserName());
+        System.out.println("dinero actual:" + partnerDto.getMoney());
+        System.out.println("Cuanto desea ingresar : ");
+        double getMoney = Double.parseDouble(Utils.getReader().nextLine());
+
+        newFound = partnerDto.getMoney() + getMoney;
+        if ("regular".equals(partnerDto.getType()) && newFound >= 1000000) {
+
+            System.out.println("el limite de ingresos es de 1000000");
+            newFound = newFound - getMoney;
+        }
+
+        if ("vip".equals(partnerDto.getType()) && newFound >= 5000000) {
+            System.out.println("el limite de ingresos es de 5000000");
+            newFound = newFound - getMoney;
+
+        }
+
+        partnerDto.setMoney(newFound);
+        this.partnerDao.getMoney(newFound);
+        this.partnerDao.updateMoney(partnerDto);
+        System.out.println("actualizacion de dinero total: " + partnerDto.getMoney());
+
     }
 
     @Override
-    public void updateGuestStatus(GuestDto guestDto) throws Exception {
+    public GuestDto getGuestById(long guestId) throws Exception {
+        return guestDao.getGuestById(guestId);
+    }
+
+    @Override
+    public void updateStatus(GuestDto guestDto) throws Exception {
         guestDao.changeStatus(guestDto);
     }
-    
+
+
+    @Override
+    public void checkVipLimit(PartnerDto partnerDto) throws Exception {
+
+        if ("vip".equals(partnerDto.getType())) {
+            int vipCount = this.partnerDao.countVip();
+            final int vip = 5;
+            if (vipCount >= vip) {
+                throw new Exception("El número máximo de socios VIP ya ha sido alcanzado.");
+            }
+        }
+    }
+
+    @Override
+    public void guestLimit(PartnerDto partnerDto) throws Exception {
+        if ("regular".equals(partnerDto.getType())) {
+            int guestCount = this.guestDao.countGuests(partnerDto.getId());
+            final int guest = 3;
+            if (guestCount >= guest) {
+                throw new Exception("El numero maximo de invitados a sido alcanzado.");
+            }
+        }
+    }
+
 }
