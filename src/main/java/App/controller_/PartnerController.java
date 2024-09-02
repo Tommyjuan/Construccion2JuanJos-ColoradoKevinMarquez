@@ -48,116 +48,124 @@ public class PartnerController implements ControllerInterface {
         }
     }
 
-    private boolean options(String option) throws Exception {
-        switch (option) {
-            case "1": {
-                this.createGuest();
-                return true;
-            }
-            case "2": {
-                this.deletePartner();
-                return true;
-            }
-            case "3": {
-                this.changeStatus();
+   // Método que maneja las opciones seleccionadas por el usuario
+private boolean options(String option) throws Exception {
+    switch (option) {
+        case "1": {
+            this.createGuest(); // Llama al método para crear un nuevo invitado
+            return true; // Continúa mostrando el menú después de crear el invitado
+        }
+        case "2": {
+            this.deletePartner(); // Llama al método para eliminar un socio
+            return true; // Continúa mostrando el menú después de eliminar el socio
+        }
+        case "3": {
+            this.changeStatus(); // Llama al método para cambiar el estado de un invitado
+            return true; // Continúa mostrando el menú después de cambiar el estado
+        }
+        case "4": {
+            this.service.promocionV(); // Llama al método de servicio para una promoción (el método está en el servicio)
+            return true; // Continúa mostrando el menú después de la promoción
+        }
+        case "5": {
+            this.newFound(); // Llama al método para actualizar el dinero (el método está en el servicio)
+            return true; // Continúa mostrando el menú después de actualizar el dinero
+        }
+        case "6": {
+            System.out.println("se ha cerrado sesión"); // Mensaje de cierre de sesión
+            return false; // Termina la sesión y cierra el menú
+        }
+        default: {
+            System.out.println("ingrese una opción válida"); // Mensaje de opción inválida
+            return true; // Continúa mostrando el menú
+        }
+    }
+}
 
-                return true;
-            }
-            case "4": {
-                this.service.promocionV();
+// Método para crear un nuevo invitado
+public void createGuest() throws Exception {
+    System.out.println("Ingrese el nombre del invitado"); 
+    String name = Utils.getReader().nextLine(); 
+    personValidator.validateName(name); // Valida el nombre del invitado
 
-                return true;
-            }
+    System.out.println("Ingrese la cédula"); 
+    long document = personValidator.validateDocument(Utils.getReader().nextLine()); // Valida y convierte la cédula a Long
 
-            case "5": {
-                this.newFound();
-                return true;
-            }
-            case "6": {
-                System.out.println("se ha cerrado sesión");
-                return false;
-            }
-            default: {
-                System.out.println("ingrese una opción válida");
-                return true;
-            }
+    System.out.println("Ingrese el número de celular (mínimo 10 dígitos)"); 
+    String celPhoneInput;
+    long celPhone;
+
+    // Ciclo para asegurar que el número de celular tenga al menos 10 dígitos
+    while (true) {
+        celPhoneInput = Utils.getReader().nextLine();
+        if (celPhoneInput.matches("\\d{10,}")) { // Verifica que el input tenga al menos 10 dígitos
+            celPhone = Long.parseLong(celPhoneInput);
+            break; // Sale del ciclo si el número es válido
+        } else {
+            System.out.println("El número de celular debe tener al menos 10 dígitos. Inténtelo nuevamente:");
         }
     }
 
-    public void createGuest() throws Exception {
-        System.out.println("Ingrese el nombre del invitado");
-        String name = Utils.getReader().nextLine();
-        personValidator.validateName(name);
+    System.out.println("Ingrese el usuario del invitado"); 
+    String userName = Utils.getReader().nextLine();
+    userValidator.validateUserName(userName); // Valida el nombre de usuario
 
-        System.out.println("Ingrese la cédula");
-        long document = personValidator.validateDocument(Utils.getReader().nextLine());
+    System.out.println("Ingrese la contraseña del invitado");
+    String password = Utils.getReader().nextLine();
+    userValidator.validatePassword(password); // Valida la contraseña
 
-        System.out.println("Ingrese el número de celular (mínimo 10 dígitos)");
-        String celPhoneInput;
-        long celPhone;
+    // Crea y configura un nuevo objeto PersonDto
+    PersonDto personDto = new PersonDto();
+    personDto.setName(name);
+    personDto.setDocument(document);
+    personDto.setCelPhone(celPhone);
 
-        while (true) {
-            celPhoneInput = Utils.getReader().nextLine();
-            if (celPhoneInput.matches("\\d{10,}")) { // Verifica que el input tenga al menos 10 dígitos
-                celPhone = Long.parseLong(celPhoneInput);
-                break;
-            } else {
-                System.out.println("El número de celular debe tener al menos 10 dígitos. Inténtelo nuevamente:");
-            }
-        }
+    // Crea y configura un nuevo objeto UserDto
+    UserDto userDto = new UserDto();
+    userDto.setPersonId(personDto);
+    userDto.setUserName(userName);
+    userDto.setPassword(password);
+    userDto.setRol("guest"); // Establece el rol como "guest"
 
-        System.out.println("Ingrese el usuario del invitado");
-        String userName = Utils.getReader().nextLine();
-        userValidator.validateUserName(userName);
+    // Crea y configura un nuevo objeto GuestDto
+    GuestDto guestDto = new GuestDto();
+    guestDto.setUserId(userDto);
 
-        System.out.println("Ingrese la contraseña del invitado");
-        String password = Utils.getReader().nextLine();
-        userValidator.validateUserName(password);
+    // Llama al servicio para crear el nuevo invitado
+    this.service.createGuest(guestDto);
+}
 
-        PersonDto personDto = new PersonDto();
-        personDto.setName(name);
-        personDto.setDocument(document);
-        personDto.setCelPhone(celPhone);
+// Método para eliminar un socio
+public void deletePartner() throws Exception {
+    this.service.deletePartner(); // Llama al método del servicio para eliminar el socio
+}
 
-        UserDto userDto = new UserDto();
-        userDto.setPersonId(personDto);
-        userDto.setUserName(userName);
-        userDto.setPassword(password);
-        userDto.setRol("guest");
-        GuestDto guestDto = new GuestDto();
-        guestDto.setUserId(userDto);
-        this.service.createGuest(guestDto);
+// Método para cambiar el estado de un invitado
+public void changeStatus() throws Exception {
+    System.out.println("Ingrese el ID del invitado:"); 
+    long guestId = Long.parseLong(Utils.getReader().nextLine()); // Lee y convierte el ID a tipo long
+    GuestDto guestDto = service.getGuestById(guestId); // Obtiene el objeto GuestDto correspondiente al ID
+
+    if (guestDto == null) {
+        System.out.println("-Invitado no existe-"); 
+        return; // Sale del método
     }
 
-    public void deletePartner() throws Exception {
-        this.service.deletePartner();
+    System.out.println("Ingresar nuevo estado (activo o inactivo): "); 
+    String status = Utils.getReader().nextLine(); // Lee el nuevo estado
 
-    }
+    guestDto.setStatus(status); // Establece el nuevo estado en el objeto GuestDto
+    service.updateStatus(guestDto); // Llama al servicio para actualizar el estado del invitado
+    System.out.println("Estado actualizado exitosamente."); 
+}
 
-    public void changeStatus() throws Exception {
-        System.out.println("Ingrese el ID del invitado:");
-        long guestId = Long.parseLong(Utils.getReader().nextLine());
-        GuestDto guestDto = service.getGuestById(guestId);
-        if (guestDto == null) {
-            System.out.println("-Invitado no existe-");
-            return;
-        }
-        System.out.println("Ingresar nuevo estado (activo o inactivo): ");
-        String Status = Utils.getReader().nextLine();
+// Método para actualizar el dinero (llamado desde el servicio)
+private void newFound() throws Exception {
+    this.service.updateMoney(); // Llama al método del servicio para actualizar el dinero
+}
 
-        guestDto.setStatus(Status);
-        service.updateStatus(guestDto);
-        System.out.println("Estado actualizado exitosamente.");
-
-    }
-
-    private void newFound() throws Exception {
-        this.service.updateMoney();
-
-    }
-
-    private void promocionV() throws Exception {
-        this.service.promocionV();
-    }
-
+// Método para realizar una promoción (llamado desde el servicio)
+private void promocionV() throws Exception {
+    this.service.promocionV(); // Llama al método del servicio para realizar la promoción
+  }
 }

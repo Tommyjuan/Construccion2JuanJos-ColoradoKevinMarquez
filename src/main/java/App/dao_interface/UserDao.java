@@ -10,7 +10,7 @@ public interface UserDao {
 
     public void createUser(UserDto userDto) throws Exception;
     
-    public void uptadeUserRole (UserDto userDto) throws Exception;
+    public void uptadeUserRole (UserDto userDto) throws Exception; //actualiza el rol de usuario
     
     public void deleteUser(UserDto userDto) throws Exception;
 }
